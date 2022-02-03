@@ -116,7 +116,7 @@ function install_ubuntu_deps_by_apt() {
 
   ${SUDO} apt install golang python -y
 
-  ${SUDO} apt install pkg-config automake libtool cmake make -y
+  ${SUDO} apt install build-essential pkg-config automake libtool cmake make -y
   ${SUDO} apt install clang-format cppcheck clang-tidy -y
   ${SUDO} apt install doxygen xdot -y
 
@@ -137,6 +137,7 @@ function install_deps_by_pkg_manager() {
 # ----------------------------------------
 # build from source
 
+# openssl -> after build, symlink or export link path need
 function install_openssl() {
 	echo "- Install OpenSSL"
 
@@ -354,7 +355,7 @@ function install_catch2() {
 	mkdir -p ${DIR} && \
 	cd ${DIR} && \
 	curl -sLf https://github.com/catchorg/Catch2/archive/refs/tags/v${CATCH2_VERSION}.tar.gz | tar -xz --strip-components=1 && \
-  cmake -S. -Bbuild -DCMAKE_INSTALL_PREFIX=${PREFIX} && \
+  cmake -S. -Bbuild -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX=${PREFIX} && \
   ${SUDO} cmake --build build --target install) || fail_exit "-Install catch2 - Failed"
 
   echo "- Install catch2 - Success"

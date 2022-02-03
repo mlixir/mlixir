@@ -29,6 +29,9 @@ Thumbs.db
 
 # ---- project specific ----
 
+# thirdparty source
+libdeps/src/
+
 # version file
 include/mlixir/version.h
 
