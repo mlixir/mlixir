@@ -13,11 +13,11 @@ tasks:
 
   cmake-format:
     - cmake-format --in-place
-      ./CMakeLists.txt
+      ./index.cmake
       ./cmake/*.cmake
-      ./lib/CMakeLists.txt
-      ./app/CMakeLists.txt
-      ./tests/CMakeLists.txt
+      ./lib/index.cmake
+      ./app/index.cmake
+      ./tests/index.cmake
 
   clang-format:
     - clang-format -i ./lib/*.cc ./app/*.cc --style=file
