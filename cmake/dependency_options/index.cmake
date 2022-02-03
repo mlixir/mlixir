@@ -67,7 +67,7 @@ macro(enable_boost)
     ${PROJECT_SOURCE_DIR}/libdeps/lib/cmake/Boost-1.78.0
     )
   #message(STATUS "!! ${Boost_LIBRARIES}")
-
+  # link target -> ${Boost_LIBRARIES}
   message(STATUS "Find boost package - Success")
 endmacro()
 
@@ -80,6 +80,7 @@ macro(enable_fmt)
     PATHS ${PROJECT_SOURCE_DIR}/libdeps/lib/cmake/fmt
     )
   #message(STATUS "!! ${fmt_LIBRARIES}")
+  # link target -> ${fmt_LIBRARIES}
   message(STATUS "Find fmt package - Success")
 endmacro()
 
@@ -91,7 +92,7 @@ macro(enable_spdlog)
     CONFIG
     PATHS ${PROJECT_SOURCE_DIR}/libdeps/lib/cmake/spdlog
     )
-  # target spdlog::spdlog, spdlog::spdlog_header_only
+  # link target -> spdlog::spdlog, spdlog::spdlog_header_only
 endmacro()
 
 # ffmpeg
@@ -108,6 +109,6 @@ macro(enable_ffmpeg)
     libswscale
     libavutil
     )
-  #message(STATUS "!! ${ffmpeg_LIBRARIES}")
+  # link target -> PkgConfig::ffmpeg
   message(STATUS "Find ffmpeg package - Success")
 endmacro()

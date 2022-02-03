@@ -16,7 +16,7 @@ target_include_directories(
   ${PROJECT_NAME}
   PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
-set(LIBRARY_DEPENDENCIES ${Boost_LIBRARIES} spdlog::spdlog ${ffmpeg_LIBRARIES})
+set(LIBRARY_DEPENDENCIES ${Boost_LIBRARIES} spdlog::spdlog PkgConfig::ffmpeg)
 message(STATUS "${PROJECT_NAME} dependencies -> ${LIBRARY_DEPENDENCIES}")
 target_link_libraries(${PROJECT_NAME}
   PRIVATE project_options project_warnings
