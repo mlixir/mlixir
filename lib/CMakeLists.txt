@@ -12,12 +12,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/lib)
 
 # include path 지정
-target_include_directories(
-  ${PROJECT_NAME}
-  PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 set(LIBRARY_DEPENDENCIES ${Boost_LIBRARIES} spdlog::spdlog PkgConfig::ffmpeg)
 message(STATUS "${PROJECT_NAME} dependencies -> ${LIBRARY_DEPENDENCIES}")
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(
+  ${PROJECT_NAME}
   PRIVATE project_options project_warnings
   PUBLIC ${LIBRARY_DEPENDENCIES})

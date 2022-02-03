@@ -1,7 +1,8 @@
 #include <mlixir/mlixir.h>
 #include <spdlog/spdlog.h>
-#include <iostream>
+
 #include <boost/program_options.hpp>
+#include <iostream>
 extern "C" {
 #include <libavformat/avformat.h>
 }
@@ -14,13 +15,14 @@ int main(int argc, char *argv[]) {
   spdlog::info("Welcome to spdlog!");
 
   std::string apple_value, orange_value;
-  try
-  {
+  try {
     opt::options_description desc("all options");
-    desc.add_options()
-        ("help,h", "produce help message")
-        ("apples,a", opt::value<std::string>(&apple_value)->default_value("10"), "how many apples do you have")
-        ("oranges,o", opt::value<std::string>(&orange_value)->default_value("20"), "how many oranges do you have");
+    desc.add_options()("help,h", "produce help message")(
+        "apples,a", opt::value<std::string>(&apple_value)->default_value("10"),
+        "how many apples do you have")(
+        "oranges,o",
+        opt::value<std::string>(&orange_value)->default_value("20"),
+        "how many oranges do you have");
 
     opt::variables_map vm;
     opt::store(opt::parse_command_line(argc, argv, desc), vm);
@@ -30,7 +32,7 @@ int main(int argc, char *argv[]) {
       std::cout << desc << std::endl;
       return EXIT_SUCCESS;
     }
-  } catch (std::exception& e) {
+  } catch (std::exception &e) {
     spdlog::error(e.what());
     return EXIT_FAILURE;
   }
@@ -43,9 +45,9 @@ int main(int argc, char *argv[]) {
 
   AVFormatContext *avctx = nullptr;
   std::string url = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
-  int mr = avformat_open_input(&avctx, url.c_str(), NULL, NULL);  
+  int mr = avformat_open_input(&avctx, url.c_str(), NULL, NULL);
   if (mr == 0)
-	  spdlog::info("avformat_open_input Success({})", mr);
+    spdlog::info("avformat_open_input Success({})", mr);
   else
     spdlog::info("avformat_open_input Failed({})", mr);
 

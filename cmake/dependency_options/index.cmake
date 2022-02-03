@@ -15,11 +15,10 @@ find_package(PkgConfig REQUIRED)
 #
 macro(dependency_options)
   set(options
-    BOOST
-    FMT
-    SPDLOG
-    FFMPEG
-    )
+      BOOST
+      FMT
+      SPDLOG
+      FFMPEG)
   set(oneValueArgs)
   set(multiValueArgs)
 
@@ -59,13 +58,12 @@ endmacro()
 # @todo: flag에 따라 component variable 만들어 로딩
 macro(enable_boost)
   message(STATUS "Find boost package")
-  find_package(Boost
-    REQUIRED
-    CONFIG
-    COMPONENTS program_options coroutine
-    PATHS
-    ${PROJECT_SOURCE_DIR}/libdeps/lib/cmake/Boost-1.78.0
-    )
+  find_package(
+    Boost REQUIRED CONFIG
+    COMPONENTS program_options
+               coroutine
+               PATHS
+               ${PROJECT_SOURCE_DIR}/libdeps/lib/cmake/Boost-1.78.0)
   #message(STATUS "!! ${Boost_LIBRARIES}")
   # link target -> ${Boost_LIBRARIES}
   message(STATUS "Find boost package - Success")
@@ -74,11 +72,12 @@ endmacro()
 # fmt
 macro(enable_fmt)
   message(STATUS "Find fmt package")
-  find_package(fmt
+  find_package(
+    fmt
     REQUIRED
     CONFIG
-    PATHS ${PROJECT_SOURCE_DIR}/libdeps/lib/cmake/fmt
-    )
+    PATHS
+    ${PROJECT_SOURCE_DIR}/libdeps/lib/cmake/fmt)
   #message(STATUS "!! ${fmt_LIBRARIES}")
   # link target -> ${fmt_LIBRARIES}
   message(STATUS "Find fmt package - Success")
@@ -87,28 +86,30 @@ endmacro()
 # spdlog
 macro(enable_spdlog)
   message(STATUS "Find spdlog package")
-  find_package(spdlog
+  find_package(
+    spdlog
     REQUIRED
     CONFIG
-    PATHS ${PROJECT_SOURCE_DIR}/libdeps/lib/cmake/spdlog
-    )
+    PATHS
+    ${PROJECT_SOURCE_DIR}/libdeps/lib/cmake/spdlog)
   # link target -> spdlog::spdlog, spdlog::spdlog_header_only
 endmacro()
 
 # ffmpeg
 macro(enable_ffmpeg)
   message(STATUS "Find ffmpeg package")
-  pkg_check_modules(ffmpeg
+  pkg_check_modules(
+    ffmpeg
     REQUIRED
-    IMPORTED_TARGET GLOBAL
+    IMPORTED_TARGET
+    GLOBAL
     libavdevice
     libavfilter
     libavformat
     libavcodec
     libswresample
     libswscale
-    libavutil
-    )
+    libavutil)
   # link target -> PkgConfig::ffmpeg
   message(STATUS "Find ffmpeg package - Success")
 endmacro()

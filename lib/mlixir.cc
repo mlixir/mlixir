@@ -2,8 +2,6 @@
 
 namespace mlixir {
 
-std::string get_project_version() {
-  return mlixir::MLIXIR_VERSION;
-}
+std::string get_project_version() { return mlixir::MLIXIR_VERSION; }
 
 }  // namespace mlixir

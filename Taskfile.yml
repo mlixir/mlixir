@@ -8,17 +8,19 @@ dotenv: ['.env']
 tasks:
   all:
     cmds:
+      - task: cmake-format
+      - task: clang-format
       - task: build
       - task: docs
 
   cmake-format:
     - cmake-format --in-place
-      ./index.cmake
-      ./cmake/*.cmake
-      ./lib/index.cmake
-      ./app/index.cmake
-      ./tests/index.cmake
-
+      ./cmake/program_options/*.cmake
+      ./cmake/program_options/src/*.cmake
+      ./cmake/dependency_options/*.cmake
+      ./lib/CMakeLists.txt
+      ./app/CMakeLists.txt
+      ./tests/CMakeLists.txt
   clang-format:
     - clang-format -i ./lib/*.cc ./app/*.cc --style=file
 
