@@ -6,7 +6,7 @@
 
 #include <catch2/catch.hpp>
 #include <iostream>
-#include <CppStarter/CppStarter.h>
+#include <mlixir/mlixir.h>
 
 int add(int a, int b) { return a + b; }
 
@@ -19,5 +19,5 @@ TEST_CASE("factorial function", "[factorial]") {
   REQUIRE(factorial(2) == 2);
   REQUIRE(factorial(3) == 6);
   REQUIRE(factorial(10) == 3628800);
-  std::cout << cppstarter::CPPSTARTER_VERSION << std::endl;
+  std::cout << mlixir::MLIXIR_VERSION << std::endl;
 }
