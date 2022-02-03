@@ -8,12 +8,12 @@ dotenv: ['.env']
 tasks:
   all:
     cmds:
-      - task: cmake-format
-      - task: clang-format
+      - task: format
       - task: build
+      - task: tests
       - task: docs
 
-  cmake-format:
+  format:
     - cmake-format --in-place
       ./cmake/program_options/*.cmake
       ./cmake/program_options/src/*.cmake
@@ -21,7 +21,6 @@ tasks:
       ./lib/CMakeLists.txt
       ./app/CMakeLists.txt
       ./tests/CMakeLists.txt
-  clang-format:
     - clang-format -i ./lib/*.cc ./app/*.cc --style=file
 
   build:
@@ -31,15 +30,15 @@ tasks:
   install:
     - cd ./build && make install # ninja install
 
+  tests:
+    - cmake --build build --target ctest
+
   docs:
     - cmake --build build --target doxygen-docs
     - cp -r ./build/html ./docs
 
-  tests:
-    - cmake --build build --target ctest
-
   clean:
-    - rm -rf build docs
+    - rm -rf build libdeps/src
 
 
 
