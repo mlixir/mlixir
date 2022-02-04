@@ -8,10 +8,14 @@ dotenv: ['.env']
 tasks:
   all:
     cmds:
+      - task: prepare
       - task: format
       - task: build
       - task: tests
       - task: docs
+
+  prepare:
+      - ./build.sh 
 
   format:
     - cmake-format --in-place
@@ -24,11 +28,15 @@ tasks:
     - clang-format -i ./lib/*.cc ./app/*.cc --style=file
 
   build:
-    - cmake -S. -Bbuild -DCMAKE_BUILD_TYPE:STRING=Debug #-G "Ninja Multi-Config"
+    - cmake -S. -Bbuild -DCMAKE_BUILD_TYPE:STRING=Debug
+    - cmake --build build
+
+  build-release:
+    - cmake -S. -Bbuild -DCMAKE_BUILD_TYPE:STRING=Release
     - cmake --build build
 
   install:
-    - cd ./build && make install # ninja install
+    - sudo cmake --build build --target install
 
   tests:
     - cmake --build build --target ctest
@@ -39,6 +47,4 @@ tasks:
 
   clean:
     - rm -rf build libdeps/src
-
-
 
