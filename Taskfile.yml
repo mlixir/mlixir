@@ -15,7 +15,7 @@ tasks:
       - task: docs
 
   prepare:
-      - ./build.sh 
+      - ./build.sh --debug
 
   format:
     - cmake-format --in-place

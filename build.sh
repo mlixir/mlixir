@@ -74,6 +74,7 @@ function parse_args() {
 	while [ "$1" != "" ]; do
 		case $1 in
 			"--debug")
+				echo "-- Debug mode selected"
 				BUILD_TYPE="debug"
 				;;
 		esac
@@ -115,6 +116,9 @@ function install_ubuntu_deps_by_apt() {
   ${SUDO} apt upgrade -y
 
   ${SUDO} apt install golang python -y
+  ${SUDO} apt install python3-pip -y
+  ${SUDO} pip install cmakelang
+  ${SUDO} sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
 
   ${SUDO} apt install build-essential pkg-config automake libtool cmake make -y
   ${SUDO} apt install clang-format cppcheck clang-tidy -y
@@ -151,6 +155,12 @@ function install_openssl() {
 	./config --prefix="${PREFIX}" --openssldir="${PREFIX}" -fPIC -Wl,-rpath,"${PREFIX}/lib" && \
 	make ${MAKEFLAG} && \
 	${SUDO} make install_sw) || fail_exit "- Install OpenSSL - Failed"
+
+  if [[ "${OSNAME}" == "Ubuntu" ]]; then
+    echo "- Install OpenSSL - create symbolic link"
+    ${SUDO} ln /usr/local/lib64/libssl.so.3 /usr/local/lib/libssl.so.3
+    ${SUDO} ln /usr/local/lib64/libcrypto.so.3 /usr/local/lib/libcrypto.so.3
+  fi
 	echo "- Install OpenSSL - Success"
 }
 
@@ -263,7 +273,7 @@ function install_ffmpeg() {
 
   local	DEBUG_FLAGS=""
 	if [ "${BUILD_TYPE}" == "debug" ]; then
-		DEBUG_FLAGS+= " --enable-debug=3  --disable-optimizations --disable-mmx --disable-stripping"
+		DEBUG_FLAGS+=" --enable-debug=3  --disable-optimizations --disable-mmx --disable-stripping"
 	fi
 
 	(DIR=${SRC_DIR}/ffmpeg && \
@@ -297,7 +307,7 @@ function install_fmt() {
 	mkdir -p ${DIR} && \
 	cd ${DIR} && \
 	curl -sLf https://github.com/fmtlib/fmt/archive/refs/tags/${FMT_VERSION}.tar.gz | tar -xz --strip-components=1 && \
-  mkdir build && cd build && \
+  mkdir -p build && cd build && \
   cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="${PREFIX}" && \
 	make ${MAKEFLAG} && \
 	${SUDO} make install) || fail_exit "- Install fmt - Failed"
@@ -316,7 +326,7 @@ function install_spdlog() {
 	mkdir -p ${DIR} && \
 	cd ${DIR} && \
 	curl -sLf https://github.com/gabime/spdlog/archive/refs/tags/v${SPDLOG_VERSION}.tar.gz | tar -xz --strip-components=1 && \
-  mkdir build && cd build && \
+  mkdir -p build && cd build && \
   cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="${PREFIX}" && \
 	make ${MAKEFLAG} && \
 	${SUDO} make install) || fail_exit "- Install spdlog - Failed"
