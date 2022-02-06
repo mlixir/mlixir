@@ -35,6 +35,10 @@ tasks:
     - cmake -S. -Bbuild -DCMAKE_BUILD_TYPE:STRING=Release
     - cmake --build build
 
+  run:
+    - cmake --build build
+    - ./build/app/mlixir_app
+
   install:
     - sudo cmake --build build --target install
 

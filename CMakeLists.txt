@@ -17,8 +17,6 @@ set(CMAKE_CXX_STANDARD 17) # <- change to wanted standard version [14, 17, 20, L
 
 # include program_options
 include(${PROJECT_SOURCE_DIR}/cmake/program_options/index.cmake)
-
-# select options
 project_options(
   WARNINGS_AS_ERRORS # Treat compiler warnings as errors
   # ENABLE_CPPCHECK # Enable static analysis with cppcheck
